@@ -1,0 +1,12 @@
+
+Name:	hx711
+
+Info:   Overlay for AVIA HX711 ADC chip for weight cells
+
+Load:   dtoverlay=hx711,<param>=<val>
+
+Params: sck-pin           GPIO used for serial clock, default: 27
+        dout-pin          GPIO used for serial data, default: 17
+        speed             clock-frequency, minimum: 20000
+                                           maximum: 2500000
+                                           default: 400000
