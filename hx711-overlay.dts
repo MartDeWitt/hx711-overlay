@@ -1,0 +1,26 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			hx711: hx711 {
+				compatible = "avia,hx711";
+				sck-gpios = <&gpio 27 0>;
+				dout-gpios = <&gpio 17 0>;
+				clock-frequency = <100000>;
+				avdd-supply = <&vdd_3v3_reg>;
+				status = "okay";
+			};
+		};
+	};
+
+	__overrides__ {
+		sck-pin = <&hx711>,"sck-gpios:4";
+		dout-pin = <&hx711>,"dout-gpios:4";
+		frequency = <&hx711>,"clock-frequency:0";
+	};
+};
