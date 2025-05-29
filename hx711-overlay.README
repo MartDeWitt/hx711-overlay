@@ -1,9 +1,14 @@
+Name:   hx711
 
-Name:	hx711
-Info:   Overlay for AVIA HX711 ADC chip for weight cells
+Info:   Overlay for AVIA HX711 ADC chip for weight cells using the hx711 kernel module
+        For more information see datasheet at:
+        https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf
+
 Load:   dtoverlay=hx711,<param>=<val>
+
 Params: sck-pin           GPIO used for serial clock, default: 27
         dout-pin          GPIO used for serial data, default: 17
         speed             clock-frequency, minimum: 20000
                                            maximum: 2500000
                                            default: 400000
+        avdd              AVDD voltage in microvolts, default 3300000
