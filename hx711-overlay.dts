@@ -2,25 +2,40 @@
 /plugin/;
 
 / {
-	compatible = "brcm,bcm2835";
+        compatible = "brcm,bcm2835";
 
-	fragment@0 {
-		target-path = "/";
-		__overlay__ {
-			hx711: hx711 {
-				compatible = "avia,hx711";
-				sck-gpios = <&gpio 27 0>;
-				dout-gpios = <&gpio 17 0>;
-				clock-frequency = <100000>;
-				avdd-supply = <&vdd_3v3_reg>;
-				status = "okay";
-			};
-		};
-	};
+        fragment@0 {
+                target = <&soc>;
+                __overlay__ {
+                        reg_hx711_avdd: reg_hx711_avdd {
+                                compatible = "regulator-fixed";
+                                regulator-name = "hx711_avdd";
+                                regulator-min-microvolt = <3300000>;
+                                regulator-max-microvolt = <3300000>;
+                                regulator-always-on;
+                        };
+                };
+        };
 
-	__overrides__ {
-		sck-pin = <&hx711>,"sck-gpios:4";
-		dout-pin = <&hx711>,"dout-gpios:4";
-		frequency = <&hx711>,"clock-frequency:0";
-	};
+        fragment@1 {
+                target-path = "/";
+                __overlay__ {
+                        hx711: hx711 {
+                                compatible = "avia,hx711";
+                                sck-gpios = <&gpio 27 0>;
+                                dout-gpios = <&gpio 17 0>;
+                                clock-frequency = <100000>;
+                                avdd-supply = <&reg_hx711_avdd>;
+                                status = "okay";
+                        };
+                };
+        };
+
+        __overrides__ {
+                sck-pin = <&hx711>,"sck-gpios:4";
+                dout-pin = <&hx711>,"dout-gpios:4";
+                frequency = <&hx711>,"clock-frequency:0";
+                avdd = <&reg_hx711_avdd>,"regulator-min-microvolt:0",
+                       <&reg_hx711_avdd>,"regulator-max-microvolt:0";
+        };
 };
