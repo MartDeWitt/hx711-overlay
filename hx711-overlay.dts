@@ -24,7 +24,7 @@
                                 compatible = "avia,hx711";
                                 sck-gpios = <&gpio 27 0>;
                                 dout-gpios = <&gpio 17 0>;
-                                clock-frequency = <100000>;
+                                clock-frequency = <400000>;
                                 avdd-supply = <&reg_hx711_avdd>;
                                 status = "okay";
                         };
